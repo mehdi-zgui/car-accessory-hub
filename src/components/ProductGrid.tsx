@@ -1,55 +1,67 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Star, ShoppingCart } from "lucide-react";
-import { products, categories } from "@/data/products";
+import { products, categories, Product } from "@/data/products";
+import { useLang } from "@/i18n/LanguageContext";
 
-const ProductCard = ({ product, index }: { product: typeof products[0]; index: number }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 40 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5, delay: index * 0.1 }}
-    className="group relative overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-[var(--shadow-glow)]"
-  >
-    {product.badge && (
-      <span className="absolute left-3 top-3 z-10 rounded-md bg-accent px-2 py-1 font-display text-[10px] font-bold tracking-wider text-accent-foreground">
-        {product.badge}
-      </span>
-    )}
-    <div className="aspect-square overflow-hidden bg-secondary">
-      <img
-        src={product.image}
-        alt={product.name}
-        loading="lazy"
-        width={400}
-        height={400}
-        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-      />
-    </div>
-    <div className="p-5">
-      <p className="mb-1 font-body text-xs font-medium tracking-wider text-primary">
-        {product.category.toUpperCase()}
-      </p>
-      <h3 className="font-body text-sm font-semibold leading-snug text-foreground">
-        {product.name}
-      </h3>
-      <div className="mt-2 flex items-center gap-1">
-        <Star size={12} className="fill-accent text-accent" />
-        <span className="font-body text-xs text-muted-foreground">{product.rating}</span>
-      </div>
-      <div className="mt-4 flex items-center justify-between">
-        <p className="font-display text-lg font-bold text-foreground">${product.price}</p>
-        <button className="flex items-center gap-1.5 rounded-lg bg-primary/10 px-3 py-2 font-body text-xs font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground">
-          <ShoppingCart size={14} />
-          Add
-        </button>
-      </div>
-    </div>
-  </motion.div>
-);
+const ProductCard = ({ product, index, onAdd }: { product: Product; index: number; onAdd: (p: Product) => void }) => {
+  const { t } = useLang();
+  const translatedName = t.productNames[product.id as keyof typeof t.productNames] || product.name;
+  const translatedBadge = product.badge ? (t.badges[product.badge as keyof typeof t.badges] || product.badge) : undefined;
+  const translatedCategory = t.categories[product.category as keyof typeof t.categories] || product.category;
 
-const ProductGrid = () => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="group relative overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-[var(--shadow-glow)]"
+    >
+      {translatedBadge && (
+        <span className="absolute left-3 top-3 z-10 rounded-md bg-accent px-2 py-1 font-display text-[10px] font-bold tracking-wider text-accent-foreground">
+          {translatedBadge}
+        </span>
+      )}
+      <div className="aspect-square overflow-hidden bg-secondary">
+        <img
+          src={product.image}
+          alt={translatedName}
+          loading="lazy"
+          width={400}
+          height={400}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+      </div>
+      <div className="p-5">
+        <p className="mb-1 font-body text-xs font-medium tracking-wider text-primary">
+          {translatedCategory.toUpperCase()}
+        </p>
+        <h3 className="font-body text-sm font-semibold leading-snug text-foreground">
+          {translatedName}
+        </h3>
+        <div className="mt-2 flex items-center gap-1">
+          <Star size={12} className="fill-accent text-accent" />
+          <span className="font-body text-xs text-muted-foreground">{product.rating}</span>
+        </div>
+        <div className="mt-4 flex items-center justify-between">
+          <p className="font-display text-lg font-bold text-foreground">{product.price} DH</p>
+          <button
+            onClick={() => onAdd(product)}
+            className="flex items-center gap-1.5 rounded-lg bg-primary/10 px-3 py-2 font-body text-xs font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+          >
+            <ShoppingCart size={14} />
+            {t.cart.add}
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const ProductGrid = ({ onAddToCart }: { onAddToCart: (p: Product) => void }) => {
   const [active, setActive] = useState<string>("All");
+  const { t } = useLang();
   const filtered = active === "All" ? products : products.filter((p) => p.category === active);
 
   return (
@@ -62,10 +74,10 @@ const ProductGrid = () => {
           className="text-center"
         >
           <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
-            Featured <span className="text-gradient-cyan">Products</span>
+            {t.products.title} <span className="text-gradient-cyan">{t.products.titleHighlight}</span>
           </h2>
           <p className="mx-auto mt-3 max-w-md font-body text-muted-foreground">
-            Hand-picked accessories to elevate your driving experience
+            {t.products.desc}
           </p>
         </motion.div>
 
@@ -80,14 +92,14 @@ const ProductGrid = () => {
                   : "border border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
               }`}
             >
-              {cat}
+              {t.categories[cat as keyof typeof t.categories] || cat}
             </button>
           ))}
         </div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {filtered.map((p, i) => (
-            <ProductCard key={p.id} product={p} index={i} />
+            <ProductCard key={p.id} product={p} index={i} onAdd={onAddToCart} />
           ))}
         </div>
       </div>

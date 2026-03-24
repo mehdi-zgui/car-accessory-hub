@@ -1,11 +1,19 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Menu, X, ShoppingCart } from "lucide-react";
+import { Menu, X, ShoppingCart, Globe } from "lucide-react";
+import { useLang } from "@/i18n/LanguageContext";
 
-const navLinks = ["Home", "Products", "Categories", "About", "Contact"];
-
-const Navbar = () => {
+const Navbar = ({ cartCount, onCartOpen }: { cartCount: number; onCartOpen: () => void }) => {
   const [open, setOpen] = useState(false);
+  const { t, lang, setLang, isRTL } = useLang();
+
+  const navLinks = [
+    { label: t.nav.home, href: "#home" },
+    { label: t.nav.products, href: "#products" },
+    { label: t.nav.categories, href: "#categories" },
+    { label: t.nav.about, href: "#about" },
+    { label: t.nav.contact, href: "#contact" },
+  ];
 
   return (
     <motion.nav
@@ -22,21 +30,30 @@ const Navbar = () => {
         <div className="hidden items-center gap-8 md:flex">
           {navLinks.map((l) => (
             <a
-              key={l}
-              href={`#${l.toLowerCase()}`}
+              key={l.href}
+              href={l.href}
               className="font-body text-sm tracking-wide text-muted-foreground transition-colors hover:text-primary"
             >
-              {l}
+              {l.label}
             </a>
           ))}
         </div>
 
-        <div className="flex items-center gap-4">
-          <button className="relative text-foreground transition-colors hover:text-primary">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setLang(lang === "fr" ? "ar" : "fr")}
+            className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-2 font-body text-xs text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+          >
+            <Globe size={14} />
+            {t.langSwitch}
+          </button>
+          <button onClick={onCartOpen} className="relative text-foreground transition-colors hover:text-primary">
             <ShoppingCart size={20} />
-            <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-accent-foreground">
-              0
-            </span>
+            {cartCount > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-accent-foreground">
+                {cartCount}
+              </span>
+            )}
           </button>
           <button className="md:hidden text-foreground" onClick={() => setOpen(!open)}>
             {open ? <X size={24} /> : <Menu size={24} />}
@@ -52,12 +69,12 @@ const Navbar = () => {
         >
           {navLinks.map((l) => (
             <a
-              key={l}
-              href={`#${l.toLowerCase()}`}
+              key={l.href}
+              href={l.href}
               onClick={() => setOpen(false)}
               className="block px-6 py-3 text-sm text-muted-foreground transition-colors hover:text-primary"
             >
-              {l}
+              {l.label}
             </a>
           ))}
         </motion.div>
