@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Zap } from "lucide-react";
 import heroImage from "@/assets/hero-car.jpg";
+import { useLang } from "@/i18n/LanguageContext";
 
 const Hero = () => {
+  const { t } = useLang();
+
   return (
     <section id="home" className="relative min-h-screen overflow-hidden pt-20">
       <div className="absolute inset-0">
@@ -32,20 +35,19 @@ const Hero = () => {
           >
             <Zap size={14} className="text-primary" />
             <span className="font-body text-xs font-medium tracking-wider text-primary">
-              FREE SHIPPING ON ORDERS $75+
+              {t.hero.badge}
             </span>
           </motion.div>
 
           <h1 className="font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-7xl">
-            Upgrade Your
+            {t.hero.title1}
             <br />
-            <span className="text-gradient-cyan">Ride</span>{" "}
-            <span className="text-gradient-gold">Today</span>
+            <span className="text-gradient-cyan">{t.hero.title2}</span>{" "}
+            <span className="text-gradient-gold">{t.hero.title3}</span>
           </h1>
 
           <p className="mt-6 max-w-md font-body text-lg leading-relaxed text-muted-foreground">
-            Premium car accessories designed for performance, style, and
-            protection. Transform your vehicle into something extraordinary.
+            {t.hero.desc}
           </p>
 
           <div className="mt-10 flex flex-wrap gap-4">
@@ -53,23 +55,19 @@ const Hero = () => {
               href="#products"
               className="group inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-4 font-display text-sm font-semibold tracking-wider text-primary-foreground transition-all hover:shadow-[var(--shadow-glow)] animate-pulse-glow"
             >
-              SHOP NOW
+              {t.hero.shop}
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </a>
             <a
               href="#categories"
               className="inline-flex items-center gap-2 rounded-lg border border-border px-8 py-4 font-display text-sm font-semibold tracking-wider text-foreground transition-colors hover:border-primary hover:text-primary"
             >
-              BROWSE CATEGORIES
+              {t.hero.browse}
             </a>
           </div>
 
           <div className="mt-14 flex gap-10">
-            {[
-              { value: "5K+", label: "Products" },
-              { value: "50K+", label: "Happy Customers" },
-              { value: "4.9★", label: "Avg Rating" },
-            ].map((s) => (
+            {t.hero.stats.map((s) => (
               <div key={s.label}>
                 <p className="font-display text-2xl font-bold text-gradient-cyan">{s.value}</p>
                 <p className="font-body text-xs text-muted-foreground">{s.label}</p>
