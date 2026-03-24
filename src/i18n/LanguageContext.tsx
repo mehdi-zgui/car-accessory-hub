@@ -4,7 +4,7 @@ import { Lang, translations } from "./translations";
 type LanguageContextType = {
   lang: Lang;
   setLang: (lang: Lang) => void;
-  t: typeof translations["fr"];
+  t: (typeof translations)[Lang];
   isRTL: boolean;
 };
 
