@@ -41,6 +41,7 @@ const IndexContent = () => {
       <ProductGrid onAddToCart={addToCart} />
       <Footer />
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} items={cart} onUpdate={updateQty} onRemove={removeItem} onClearCart={clearCart} />
+      <WhatsAppButton />
     </div>
   );
 };
