@@ -140,19 +140,20 @@ const CartDrawer = ({ open, onClose, items, onUpdate, onRemove, onClearCart }: C
                       { key: "address", label: t.cart.address },
                       { key: "city", label: t.cart.city },
                     ].map((f) => (
-                      <input
-                        key={f.key}
-                        type="text"
-                        required
-                        placeholder={f.label}
-                        value={form[f.key as keyof typeof form]}
-                        onChange={(e) => {
-                          setForm({ ...form, [f.key]: e.target.value });
-                          if (errors[f.key]) setErrors({ ...errors, [f.key]: "" });
-                        }}
-                        className={`w-full rounded-lg border ${errors[f.key] ? "border-destructive" : "border-border"} bg-transparent px-4 py-2.5 font-body text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary`}
-                      />
-                      {errors[f.key] && <p className="font-body text-xs text-destructive">{errors[f.key]}</p>}
+                      <div key={f.key}>
+                        <input
+                          type="text"
+                          required
+                          placeholder={f.label}
+                          value={form[f.key as keyof typeof form]}
+                          onChange={(e) => {
+                            setForm({ ...form, [f.key]: e.target.value });
+                            if (errors[f.key]) setErrors({ ...errors, [f.key]: "" });
+                          }}
+                          className={`w-full rounded-lg border ${errors[f.key] ? "border-destructive" : "border-border"} bg-transparent px-4 py-2.5 font-body text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary`}
+                        />
+                        {errors[f.key] && <p className="font-body text-xs text-destructive">{errors[f.key]}</p>}
+                      </div>
                     ))}
                     <button
                       type="submit"
