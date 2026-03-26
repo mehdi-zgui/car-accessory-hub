@@ -28,6 +28,8 @@ const IndexContent = () => {
     setCart((prev) => prev.filter((i) => i.id !== id));
   }, []);
 
+  const clearCart = useCallback(() => setCart([]), []);
+
   const cartCount = cart.reduce((s, i) => s + i.qty, 0);
 
   return (
@@ -37,7 +39,7 @@ const IndexContent = () => {
       <Features />
       <ProductGrid onAddToCart={addToCart} />
       <Footer />
-      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} items={cart} onUpdate={updateQty} onRemove={removeItem} />
+      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} items={cart} onUpdate={updateQty} onRemove={removeItem} onClearCart={clearCart} />
     </div>
   );
 };

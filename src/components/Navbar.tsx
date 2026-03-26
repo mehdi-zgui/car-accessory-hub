@@ -10,8 +10,6 @@ const Navbar = ({ cartCount, onCartOpen }: { cartCount: number; onCartOpen: () =
   const navLinks = [
     { label: t.nav.home, href: "#home" },
     { label: t.nav.products, href: "#products" },
-    { label: t.nav.categories, href: "#categories" },
-    { label: t.nav.about, href: "#about" },
     { label: t.nav.contact, href: "#contact" },
   ];
 
