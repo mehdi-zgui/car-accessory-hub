@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import ProductGrid from "@/components/ProductGrid";
 import { Features, Footer } from "@/components/FooterFeatures";
+import Testimonials from "@/components/Testimonials";
 import CartDrawer, { CartItem } from "@/components/CartDrawer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { Product } from "@/data/products";
@@ -39,6 +40,7 @@ const IndexContent = () => {
       <Hero />
       <Features />
       <ProductGrid onAddToCart={addToCart} />
+      <Testimonials />
       <Footer />
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} items={cart} onUpdate={updateQty} onRemove={removeItem} onClearCart={clearCart} />
       <WhatsAppButton />
