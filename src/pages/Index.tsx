@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import ProductGrid from "@/components/ProductGrid";
 import { Features, Footer } from "@/components/FooterFeatures";
 import CartDrawer, { CartItem } from "@/components/CartDrawer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import { Product } from "@/data/products";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 
@@ -40,6 +41,7 @@ const IndexContent = () => {
       <ProductGrid onAddToCart={addToCart} />
       <Footer />
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} items={cart} onUpdate={updateQty} onRemove={removeItem} onClearCart={clearCart} />
+      <WhatsAppButton />
     </div>
   );
 };
