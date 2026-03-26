@@ -13,20 +13,48 @@ interface CartDrawerProps {
   items: CartItem[];
   onUpdate: (id: number, qty: number) => void;
   onRemove: (id: number) => void;
+  onClearCart: () => void;
 }
 
-const CartDrawer = ({ open, onClose, items, onUpdate, onRemove }: CartDrawerProps) => {
+const CartDrawer = ({ open, onClose, items, onUpdate, onRemove, onClearCart }: CartDrawerProps) => {
   const { t, isRTL } = useLang();
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ name: "", phone: "", address: "", city: "" });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const total = items.reduce((s, i) => s + i.price * i.qty, 0);
 
+  const validate = () => {
+    const errs: Record<string, string> = {};
+    if (!form.name.trim()) errs.name = t.cart.nameError;
+    if (!/^(0[5-7]\d{8}|\+212[5-7]\d{8})$/.test(form.phone.trim())) errs.phone = t.cart.phoneError;
+    if (!form.address.trim()) errs.address = t.cart.addressError;
+    if (!form.city.trim()) errs.city = t.cart.cityError;
+    setErrors(errs);
+    return Object.keys(errs).length === 0;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validate()) return;
+
+    const productLines = items.map((i) => {
+      const name = t.productNames[i.id as keyof typeof t.productNames] || i.name;
+      return `• ${name} x${i.qty} = ${i.price * i.qty} DH`;
+    }).join("%0A");
+
+    const msg = encodeURIComponent(
+      `🛒 Nouvelle commande AutoModX\n\n` +
+      `👤 ${form.name}\n📞 ${form.phone}\n📍 ${form.address}, ${form.city}\n\n`
+    ) + `${productLines}%0A%0A💰 Total: ${total} DH%0A💵 Paiement à la livraison`;
+
+    window.open(`https://wa.me/212675811873?text=${msg}`, "_blank");
+
     toast.success(t.cart.success);
     setShowForm(false);
     setForm({ name: "", phone: "", address: "", city: "" });
+    setErrors({});
+    onClearCart();
     onClose();
   };
 
@@ -118,9 +146,13 @@ const CartDrawer = ({ open, onClose, items, onUpdate, onRemove }: CartDrawerProp
                         required
                         placeholder={f.label}
                         value={form[f.key as keyof typeof form]}
-                        onChange={(e) => setForm({ ...form, [f.key]: e.target.value })}
-                        className="w-full rounded-lg border border-border bg-transparent px-4 py-2.5 font-body text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
+                        onChange={(e) => {
+                          setForm({ ...form, [f.key]: e.target.value });
+                          if (errors[f.key]) setErrors({ ...errors, [f.key]: "" });
+                        }}
+                        className={`w-full rounded-lg border ${errors[f.key] ? "border-destructive" : "border-border"} bg-transparent px-4 py-2.5 font-body text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary`}
                       />
+                      {errors[f.key] && <p className="font-body text-xs text-destructive">{errors[f.key]}</p>}
                     ))}
                     <button
                       type="submit"
