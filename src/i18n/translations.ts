@@ -6,8 +6,6 @@ export const translations = {
     nav: {
       home: "Accueil",
       products: "Produits",
-      categories: "Catégories",
-      about: "À propos",
       contact: "Contact",
     },
     hero: {
@@ -80,6 +78,10 @@ export const translations = {
       submit: "Confirmer la commande (Paiement à la livraison)",
       success: "Commande envoyée ! Nous vous contacterons bientôt.",
       cod: "💵 Paiement à la livraison uniquement",
+      nameError: "Le nom est requis",
+      phoneError: "Numéro de téléphone invalide",
+      addressError: "L'adresse est requise",
+      cityError: "La ville est requise",
     },
     langSwitch: "العربية",
   },
@@ -88,8 +90,6 @@ export const translations = {
     nav: {
       home: "الرئيسية",
       products: "المنتجات",
-      categories: "الفئات",
-      about: "من نحن",
       contact: "اتصل بنا",
     },
     hero: {
@@ -162,6 +162,10 @@ export const translations = {
       submit: "تأكيد الطلب (الدفع عند الاستلام)",
       success: "تم إرسال الطلب! سنتواصل معك قريباً.",
       cod: "💵 الدفع عند الاستلام فقط",
+      nameError: "الاسم مطلوب",
+      phoneError: "رقم الهاتف غير صالح",
+      addressError: "العنوان مطلوب",
+      cityError: "المدينة مطلوبة",
     },
     langSwitch: "Français",
   },
