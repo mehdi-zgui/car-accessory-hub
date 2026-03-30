@@ -5,7 +5,7 @@ import { DBProduct } from "@/hooks/useProducts";
 import { useLang } from "@/i18n/LanguageContext";
 import { toast } from "sonner";
 
-export type CartItem = Product & { qty: number };
+export type CartItem = DBProduct & { qty: number };
 
 interface CartDrawerProps {
   open: boolean;
