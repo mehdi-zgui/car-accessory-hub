@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Star, ShoppingCart } from "lucide-react";
-import { products, categories, Product } from "@/data/products";
+import { Star, ShoppingCart, Loader2 } from "lucide-react";
+import { categories } from "@/data/products";
+import { useProducts, DBProduct } from "@/hooks/useProducts";
 import { useLang } from "@/i18n/LanguageContext";
 
-const ProductCard = ({ product, index, onAdd }: { product: Product; index: number; onAdd: (p: Product) => void }) => {
-  const { t } = useLang();
-  const translatedName = t.productNames[product.id as keyof typeof t.productNames] || product.name;
-  const translatedBadge = product.badge ? (t.badges[product.badge as keyof typeof t.badges] || product.badge) : undefined;
+const ProductCard = ({ product, index, onAdd }: { product: DBProduct; index: number; onAdd: (p: DBProduct) => void }) => {
+  const { t, lang } = useLang();
+  const isAr = lang === "ar";
+  const displayName = isAr && product.name_ar ? product.name_ar : (t.productNames[product.id as keyof typeof t.productNames] || product.name);
+  const displayBadge = product.badge
+    ? (isAr && product.badge_ar ? product.badge_ar : (t.badges[product.badge as keyof typeof t.badges] || product.badge))
+    : undefined;
   const translatedCategory = t.categories[product.category as keyof typeof t.categories] || product.category;
 
   return (
@@ -18,19 +22,20 @@ const ProductCard = ({ product, index, onAdd }: { product: Product; index: numbe
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className="group relative overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-[var(--shadow-glow)]"
     >
-      {translatedBadge && (
+      {displayBadge && (
         <span className="absolute left-3 top-3 z-10 rounded-md bg-accent px-2 py-1 font-display text-[10px] font-bold tracking-wider text-accent-foreground">
-          {translatedBadge}
+          {displayBadge}
         </span>
       )}
       <div className="aspect-square overflow-hidden bg-secondary">
         <img
           src={product.image}
-          alt={translatedName}
+          alt={displayName}
           loading="lazy"
           width={400}
           height={400}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+          onError={(e) => (e.currentTarget.src = "/placeholder.svg")}
         />
       </div>
       <div className="p-5">
@@ -38,7 +43,7 @@ const ProductCard = ({ product, index, onAdd }: { product: Product; index: numbe
           {translatedCategory.toUpperCase()}
         </p>
         <h3 className="font-body text-sm font-semibold leading-snug text-foreground">
-          {translatedName}
+          {displayName}
         </h3>
         <div className="mt-2 flex items-center gap-1">
           <Star size={12} className="fill-accent text-accent" />
@@ -59,9 +64,10 @@ const ProductCard = ({ product, index, onAdd }: { product: Product; index: numbe
   );
 };
 
-const ProductGrid = ({ onAddToCart }: { onAddToCart: (p: Product) => void }) => {
+const ProductGrid = ({ onAddToCart }: { onAddToCart: (p: any) => void }) => {
   const [active, setActive] = useState<string>("All");
   const { t } = useLang();
+  const { data: products = [], isLoading } = useProducts();
   const filtered = active === "All" ? products : products.filter((p) => p.category === active);
 
   return (
@@ -97,11 +103,17 @@ const ProductGrid = ({ onAddToCart }: { onAddToCart: (p: Product) => void }) => 
           ))}
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {filtered.map((p, i) => (
-            <ProductCard key={p.id} product={p} index={i} onAdd={onAddToCart} />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="mt-12 flex items-center justify-center py-20">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
+        ) : (
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {filtered.map((p, i) => (
+              <ProductCard key={p.id} product={p} index={i} onAdd={onAddToCart} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

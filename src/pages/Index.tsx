@@ -6,14 +6,14 @@ import { Features, Footer } from "@/components/FooterFeatures";
 import Testimonials from "@/components/Testimonials";
 import CartDrawer, { CartItem } from "@/components/CartDrawer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { Product } from "@/data/products";
+import { DBProduct } from "@/hooks/useProducts";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 
 const IndexContent = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const addToCart = useCallback((product: Product) => {
+  const addToCart = useCallback((product: DBProduct) => {
     setCart((prev) => {
       const existing = prev.find((i) => i.id === product.id);
       if (existing) return prev.map((i) => (i.id === product.id ? { ...i, qty: i.qty + 1 } : i));
