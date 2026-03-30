@@ -6,7 +6,7 @@ import { Features, Footer } from "@/components/FooterFeatures";
 import Testimonials from "@/components/Testimonials";
 import CartDrawer, { CartItem } from "@/components/CartDrawer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { Product } from "@/data/products";
+import { DBProduct } from "@/hooks/useProducts";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 
 const IndexContent = () => {
