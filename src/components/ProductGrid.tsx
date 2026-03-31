@@ -1,16 +1,14 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Star, ShoppingCart, Loader2 } from "lucide-react";
-import { categories } from "@/data/products";
-import { useProducts, DBProduct } from "@/hooks/useProducts";
+import { Star, ShoppingCart } from "lucide-react";
+import { categories, products, Product } from "@/data/products";
 import { useLang } from "@/i18n/LanguageContext";
 
-const ProductCard = ({ product, index, onAdd }: { product: DBProduct; index: number; onAdd: (p: DBProduct) => void }) => {
-  const { t, lang } = useLang();
-  const isAr = lang === "ar";
-  const displayName = isAr && product.name_ar ? product.name_ar : (t.productNames[product.id as keyof typeof t.productNames] || product.name);
+const ProductCard = ({ product, index, onAdd }: { product: Product; index: number; onAdd: (p: Product) => void }) => {
+  const { t } = useLang();
+  const displayName = t.productNames[product.id as keyof typeof t.productNames] || product.name;
   const displayBadge = product.badge
-    ? (isAr && product.badge_ar ? product.badge_ar : (t.badges[product.badge as keyof typeof t.badges] || product.badge))
+    ? (t.badges[product.badge as keyof typeof t.badges] || product.badge)
     : undefined;
   const translatedCategory = t.categories[product.category as keyof typeof t.categories] || product.category;
 
@@ -67,7 +65,6 @@ const ProductCard = ({ product, index, onAdd }: { product: DBProduct; index: num
 const ProductGrid = ({ onAddToCart }: { onAddToCart: (p: any) => void }) => {
   const [active, setActive] = useState<string>("All");
   const { t } = useLang();
-  const { data: products = [], isLoading } = useProducts();
   const filtered = active === "All" ? products : products.filter((p) => p.category === active);
 
   return (
@@ -103,17 +100,11 @@ const ProductGrid = ({ onAddToCart }: { onAddToCart: (p: any) => void }) => {
           ))}
         </div>
 
-        {isLoading ? (
-          <div className="mt-12 flex items-center justify-center py-20">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          </div>
-        ) : (
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {filtered.map((p, i) => (
-              <ProductCard key={p.id} product={p} index={i} onAdd={onAddToCart} />
-            ))}
-          </div>
-        )}
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {filtered.map((p, i) => (
+            <ProductCard key={p.id} product={p} index={i} onAdd={onAddToCart} />
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -35,9 +35,8 @@ export const translations = {
     footer: {
       desc: "Accessoires auto premium pour les passionnés qui exigent le meilleur. Qualité, style, performance.",
       contact: "CONTACT",
-      newsletter: "NEWSLETTER",
-      newsletterDesc: "Recevez nos offres exclusives et nouveautés.",
-      emailPlaceholder: "votre@email.com",
+      about: "À PROPOS",
+      aboutDesc: "AutoModX est votre destination premium pour les accessoires auto au Maroc. Nous sélectionnons les meilleurs produits pour transformer votre véhicule.",
       copyright: "© 2026 AutoModX. Tous droits réservés.",
     },
     categories: {
@@ -119,9 +118,8 @@ export const translations = {
     footer: {
       desc: "إكسسوارات سيارات فاخرة لعشاق السيارات. جودة، أناقة، أداء.",
       contact: "اتصل بنا",
-      newsletter: "النشرة الإخبارية",
-      newsletterDesc: "احصل على العروض الحصرية والمنتجات الجديدة.",
-      emailPlaceholder: "بريدك@الإلكتروني.com",
+      about: "من نحن",
+      aboutDesc: "أوتومودكس هو وجهتك المميزة لإكسسوارات السيارات في المغرب. نختار لك أفضل المنتجات لتحويل سيارتك.",
       copyright: "© 2026 AutoModX. جميع الحقوق محفوظة.",
     },
     categories: {

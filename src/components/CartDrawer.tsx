@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Minus, Plus, Trash2 } from "lucide-react";
-import { DBProduct } from "@/hooks/useProducts";
+import { Product } from "@/data/products";
 import { useLang } from "@/i18n/LanguageContext";
 import { toast } from "sonner";
 
-export type CartItem = DBProduct & { qty: number };
+export type CartItem = Product & { qty: number };
 
 interface CartDrawerProps {
   open: boolean;
