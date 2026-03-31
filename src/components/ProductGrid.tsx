@@ -5,7 +5,7 @@ import { categories, products, Product } from "@/data/products";
 import { useLang } from "@/i18n/LanguageContext";
 
 const ProductCard = ({ product, index, onAdd }: { product: Product; index: number; onAdd: (p: Product) => void }) => {
-  const { t, lang } = useLang();
+  const { t } = useLang();
   const displayName = t.productNames[product.id as keyof typeof t.productNames] || product.name;
   const displayBadge = product.badge
     ? (t.badges[product.badge as keyof typeof t.badges] || product.badge)
