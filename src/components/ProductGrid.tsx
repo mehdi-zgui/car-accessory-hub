@@ -4,7 +4,7 @@ import { Star, ShoppingCart, Loader2 } from "lucide-react";
 import { categories, products, Product } from "@/data/products";
 import { useLang } from "@/i18n/LanguageContext";
 
-const ProductCard = ({ product, index, onAdd }: { product: DBProduct; index: number; onAdd: (p: DBProduct) => void }) => {
+const ProductCard = ({ product, index, onAdd }: { product: Product; index: number; onAdd: (p: Product) => void }) => {
   const { t, lang } = useLang();
   const isAr = lang === "ar";
   const displayName = isAr && product.name_ar ? product.name_ar : (t.productNames[product.id as keyof typeof t.productNames] || product.name);
