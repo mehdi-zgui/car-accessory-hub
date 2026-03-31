@@ -101,17 +101,11 @@ const ProductGrid = ({ onAddToCart }: { onAddToCart: (p: any) => void }) => {
           ))}
         </div>
 
-        {isLoading ? (
-          <div className="mt-12 flex items-center justify-center py-20">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          </div>
-        ) : (
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {filtered.map((p, i) => (
-              <ProductCard key={p.id} product={p} index={i} onAdd={onAddToCart} />
-            ))}
-          </div>
-        )}
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {filtered.map((p, i) => (
+            <ProductCard key={p.id} product={p} index={i} onAdd={onAddToCart} />
+          ))}
+        </div>
       </div>
     </section>
   );
