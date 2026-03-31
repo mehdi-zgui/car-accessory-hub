@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Star, ShoppingCart, Loader2 } from "lucide-react";
-import { categories } from "@/data/products";
-import { useProducts, DBProduct } from "@/hooks/useProducts";
+import { categories, products, Product } from "@/data/products";
 import { useLang } from "@/i18n/LanguageContext";
 
 const ProductCard = ({ product, index, onAdd }: { product: DBProduct; index: number; onAdd: (p: DBProduct) => void }) => {
