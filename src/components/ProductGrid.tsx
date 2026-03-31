@@ -66,7 +66,6 @@ const ProductCard = ({ product, index, onAdd }: { product: Product; index: numbe
 const ProductGrid = ({ onAddToCart }: { onAddToCart: (p: any) => void }) => {
   const [active, setActive] = useState<string>("All");
   const { t } = useLang();
-  const { data: products = [], isLoading } = useProducts();
   const filtered = active === "All" ? products : products.filter((p) => p.category === active);
 
   return (
