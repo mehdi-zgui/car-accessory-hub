@@ -6,10 +6,9 @@ import { useLang } from "@/i18n/LanguageContext";
 
 const ProductCard = ({ product, index, onAdd }: { product: Product; index: number; onAdd: (p: Product) => void }) => {
   const { t, lang } = useLang();
-  const isAr = lang === "ar";
-  const displayName = isAr && product.name_ar ? product.name_ar : (t.productNames[product.id as keyof typeof t.productNames] || product.name);
+  const displayName = t.productNames[product.id as keyof typeof t.productNames] || product.name;
   const displayBadge = product.badge
-    ? (isAr && product.badge_ar ? product.badge_ar : (t.badges[product.badge as keyof typeof t.badges] || product.badge))
+    ? (t.badges[product.badge as keyof typeof t.badges] || product.badge)
     : undefined;
   const translatedCategory = t.categories[product.category as keyof typeof t.categories] || product.category;
 
