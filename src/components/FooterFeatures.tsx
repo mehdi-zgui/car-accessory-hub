@@ -35,18 +35,10 @@ const Footer = () => {
           </div>
 
           <div id="about">
-            <h4 className="font-display text-sm font-semibold tracking-wider text-foreground">{t.footer.newsletter}</h4>
-            <p className="mt-4 font-body text-sm text-muted-foreground">{t.footer.newsletterDesc}</p>
-            <div className="mt-4 flex overflow-hidden rounded-lg border border-border focus-within:border-primary">
-              <input
-                type="email"
-                placeholder={t.footer.emailPlaceholder}
-                className="flex-1 bg-transparent px-4 py-3 font-body text-sm text-foreground outline-none placeholder:text-muted-foreground"
-              />
-              <button className="flex items-center gap-1 bg-primary px-4 text-primary-foreground transition-colors hover:bg-primary/90">
-                <Send size={14} />
-              </button>
-            </div>
+            <h4 className="font-display text-sm font-semibold tracking-wider text-foreground">{t.footer.about}</h4>
+            <p className="mt-4 font-body text-sm leading-relaxed text-muted-foreground">
+              {t.footer.aboutDesc}
+            </p>
           </div>
         </div>
 
