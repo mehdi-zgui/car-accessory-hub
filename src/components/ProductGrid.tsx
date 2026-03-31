@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Star, ShoppingCart, Loader2 } from "lucide-react";
+import { Star, ShoppingCart } from "lucide-react";
 import { categories, products, Product } from "@/data/products";
 import { useLang } from "@/i18n/LanguageContext";
 
