@@ -20,7 +20,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
       </div>
 
-      <div className="container relative mx-auto flex min-h-[600px] lg:min-h-[calc(100vh-5rem)] max-h-[900px] items-center px-6 py-12">
+      <div className="container relative mx-auto flex items-center px-6 py-16 lg:py-24">
         <motion.div
           initial={{ opacity: 0, x: -60 }}
           animate={{ opacity: 1, x: 0 }}
