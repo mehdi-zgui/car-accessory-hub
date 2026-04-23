@@ -7,7 +7,7 @@ const Hero = () => {
   const { t } = useLang();
 
   return (
-    <section id="home" className="relative min-h-screen overflow-hidden pt-20">
+    <section id="home" className="relative overflow-hidden pt-20 pb-16 lg:pb-24">
       <div className="absolute inset-0">
         <img
           src={heroImage}
@@ -20,7 +20,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
       </div>
 
-      <div className="container relative mx-auto flex min-h-[calc(100vh-5rem)] items-center px-6">
+      <div className="container relative mx-auto flex min-h-[600px] lg:min-h-[calc(100vh-5rem)] max-h-[900px] items-center px-6 py-12">
         <motion.div
           initial={{ opacity: 0, x: -60 }}
           animate={{ opacity: 1, x: 0 }}
